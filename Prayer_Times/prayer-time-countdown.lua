@@ -91,6 +91,16 @@ function Update()
 		SKIN:Bang('!SetVariable', 'AthanPlayed', 'False')
 	end
 
+	-- Once we reach maghrib then we should enter the next day. 
+	-- Once it's midnight the logic will still hold since current_time will be less
+	-- than all of the prayers inlcuing maghrib and the skin will automatically 
+	-- call for the next day
+	if prayer_times_table['Maghrib'] < current_time then
+		SKIN:Bang('!SetVariable', 'Tomorrow',  86400)
+	else
+		SKIN:Bang('!SetVariable', 'Tomorrow',  0)
+	end
+
 	if prayer_times_table['Isha'] < current_time and prayer_times_table['Midnight'] > current_time then
 		local remainingMinutes_Midnight = prayer_times_table['Midnight'] - current_time
 		local hours_Midnight = math.floor(remainingMinutes_Midnight / 60)
